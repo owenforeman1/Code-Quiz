@@ -38,8 +38,8 @@ var startQuiz = function () {
 
 let questionOne = {
     title: "1. What is one right or freedom from the First Amendment?",
-    questions: ["Free pizza", "Speech", "free Coca Cola", "Free dogs"],
-    correctAnswer: 1,
+    questions: ["Free pizza", "free soda", "Speech", "Free dogs"],
+    correctAnswer: 2,
 };
 
 let questionTwo = {
@@ -55,15 +55,15 @@ let questionThree = {
 };
 
 let questionFour = {
-    title: "3. What is one right or freedom from the First Amendment?",
-    questions: ["Free pizza", "Speech", "free Coca Cola", "Free dogs"],
-    correctAnswer: 1,
+    title: "4. Under our Constitution, some powers belong to the federal government. What is one power of the federalgovernment?",
+    questions: ["To declare war", "Speech", "free Coca Cola", "Free dogs"],
+    correctAnswer: 0,
 };
 
 let questionFive = {
-    title: "3. What is one right or freedom from the First Amendment?",
-    questions: ["Free pizza", "Speech", "free Coca Cola", "Free dogs"],
-    correctAnswer: 1,
+    title: "5. What is one reason colonists came to America?",
+    questions: ["Free pizza", "Speech", "free Coca Cola", "Freedom"],
+    correctAnswer: 3,
 };
 
 let questionsArr = [
