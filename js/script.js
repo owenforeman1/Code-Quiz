@@ -112,23 +112,32 @@ buttonsArray.forEach(function (element, index) {
 
 
 
+};
 
-
-
-
-
+var finishQuiz = function () {
+    console.log("done");
 };
 
 var correctAnswer = function () {
-    console.log("Correct");
-    currentQuestion++;
-    nextQuestion(questionsArr[currentQuestion]);
+    if (currentQuestion === 4) {
+        finishQuiz();
+    } else {
+        console.log("Correct");
+        currentQuestion++;
+        nextQuestion(questionsArr[currentQuestion]);
+    }
+   
 };
 
 var wrongAnswer = function () {
-    console.log("wrong");
-    currentQuestion++;
-    nextQuestion(questionsArr[currentQuestion]);
+     if (currentQuestion === 4) {
+         finishQuiz();
+     } else {
+         console.log("Wrong");
+         currentQuestion++;
+         nextQuestion(questionsArr[currentQuestion]);
+     }
+
 };
 
 
