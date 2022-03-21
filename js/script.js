@@ -4,12 +4,17 @@ var h1El = document.createElement("h1");
 var infoEl = document.createElement("div");
 
 var questionsEl = document.createElement("h2");
-var answersEl = document.createElement("ul")
+var answersEl = document.createElement("ul");
 var currentQuestion = 0;
 var currentTime = 75;
 var timerEl = document.createElement("p");
 var timeInterval;
-var HighscoreScore = [];
+var highScoreScores = [
+    { initals: "of", time: 15 },
+    { initals: "wf", time: 13 },
+    { initals: "dp", time: 9 },
+];
+var scoreInput = document.querySelector("score");
 
 var buttonOne = document.createElement("button");
 var buttonTwo = document.createElement("button");
@@ -17,12 +22,12 @@ var buttonThree = document.createElement("button");
 var buttonFour = document.createElement("button");
 var introEl = document.createElement("p");
 
-
 // text
 h1El.textContent = "US-Citizenship-Quiz!";
-questionsEl.textContent = "1. What is one right or freedom from the First Amendment?";
-introEl.textContent = "Try to answer the following questions within the time limit. Keep in mind wrong answers will deduct scoretime by ten seconds.";
-
+questionsEl.textContent =
+    "1. What is one right or freedom from the First Amendment?";
+introEl.textContent =
+    "Try to answer the following questions within the time limit. Keep in mind wrong answers will deduct scoretime by ten seconds.";
 
 body.appendChild(h1El);
 body.appendChild(introEl);
@@ -39,7 +44,7 @@ var startQuiz = function () {
     answersEl.appendChild(buttonOne);
     answersEl.appendChild(buttonTwo);
     answersEl.appendChild(buttonThree);
-    answersEl.appendChild(buttonFour);   
+    answersEl.appendChild(buttonFour);
     nextQuestion(questionsArr[currentQuestion]);
     body.appendChild(timerEl);
     countdown();
@@ -49,7 +54,7 @@ function countdown() {
     var currentTime = 75;
     timerEl.textContent = currentTime + " seconds remaining";
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-     timeInterval = setInterval(function () {
+    timeInterval = setInterval(function () {
         // As long as the `currentTime` is greater than 1
         if (currentTime > 1) {
             // Set the `textContent` of `timerEl` to show the remaining seconds
@@ -85,19 +90,34 @@ let questionTwo = {
 
 let questionThree = {
     title: "3. If the President can no longer serve, who becomes President?",
-    questions: ["The People", "The Vice-President", "The Biggest Company", "The First Lady"],
+    questions: [
+        "The People",
+        "The Vice-President",
+        "The Biggest Company",
+        "The First Lady",
+    ],
     correctAnswer: 1,
 };
 
 let questionFour = {
     title: "4. Under our Constitution, some powers belong to the federal government. What is one power of the federal government?",
-    questions: ["To declare war", "Time Travel", "Ban Elections", "Ban Religions"],
+    questions: [
+        "To declare war",
+        "Time Travel",
+        "Ban Elections",
+        "Ban Religions",
+    ],
     correctAnswer: 0,
 };
 
 let questionFive = {
     title: "5. What is one reason colonists came to America?",
-    questions: ["Free pizza", "Wanted Marshal law established", "Wanted different dog breeds", "Freedom"],
+    questions: [
+        "Free pizza",
+        "Wanted Marshal law established",
+        "Wanted different dog breeds",
+        "Freedom",
+    ],
     correctAnswer: 3,
 };
 
@@ -109,87 +129,107 @@ let questionsArr = [
     questionFive,
 ];
 
-
 var nextQuestion = function (question) {
-// new title
-questionsEl.textContent = question.title;
-// remove excitstinbg
-var oldButtonsArray = document.querySelectorAll("button");
-oldButtonsArray.forEach(function (element, index) {
-    element.remove();
-});
-// creating new btn
-var buttonOne = document.createElement("button");
-var buttonTwo = document.createElement("button");
-var buttonThree = document.createElement("button");
-var buttonFour = document.createElement("button");
-answersEl.appendChild(buttonOne);
-answersEl.appendChild(buttonTwo);
-answersEl.appendChild(buttonThree);
-answersEl.appendChild(buttonFour);   
-// append new button
-
-// change buttons
-var buttonsArray = document.querySelectorAll("button");
-
-buttonsArray.forEach(function (element, index) {
-    element.textContent = question.questions[index];
-    element.addEventListener("click", function () {
-        console.log("Button CLicKed");
-        if (question.correctAnswer == index) {
-            correctAnswer();
-        } else {
-            wrongAnswer();
-        }
+    // new title
+    questionsEl.textContent = question.title;
+    // remove existing
+    var oldButtonsArray = document.querySelectorAll("button");
+    oldButtonsArray.forEach(function (element, index) {
+        element.remove();
     });
-});
+    // creating new btn
+    var buttonOne = document.createElement("button");
+    var buttonTwo = document.createElement("button");
+    var buttonThree = document.createElement("button");
+    var buttonFour = document.createElement("button");
+    answersEl.appendChild(buttonOne);
+    answersEl.appendChild(buttonTwo);
+    answersEl.appendChild(buttonThree);
+    answersEl.appendChild(buttonFour);
+    // append new button
 
+    // change buttons
+    var buttonsArray = document.querySelectorAll("button");
 
+    buttonsArray.forEach(function (element, index) {
+        element.textContent = question.questions[index];
+        element.addEventListener("click", function () {
+            console.log("Button CLicKed");
+            if (question.correctAnswer == index) {
+                correctAnswer();
+            } else {
+                wrongAnswer();
+            }
+        });
+    });
 
-
+    // current time linked to highscores
+    // make page pretty
+    // go back to start button
+    // clear highscore history button
+    // wrong answers to subtract time
+    // figure out highscore storage
+    // local storage to store scores in browser
 };
 
-var finishQuiz = function () { 
+var finishQuiz = function () {
     var oldTitle = document.querySelector("h2");
     oldTitle.remove();
     var oldButtonsArray = document.querySelectorAll("button");
-      oldButtonsArray.forEach(function (element, index) {
-          element.remove();
-      });
-      clearInterval(timeInterval);
+    oldButtonsArray.forEach(function (element, index) {
+        element.remove();
+    });
+    clearInterval(timeInterval);
     //   needs done and initail screen with score
- var endScreen = document.createElement("h2");
- body.appendChild(endScreen);
- endScreen.textContent = "All Done!";
+    var endScreen = document.createElement("h2");
+    body.appendChild(endScreen);
+    endScreen.textContent = "All Done!";
 
- var input = document.createElement("input");
- input.type = "text";
- body.appendChild(input);
+    var input = document.createElement("input");
+    input.type = "text";
+    body.appendChild(input);
 
+    var inputButton = document.createElement("button");
+    inputButton.type = "button";
+    body.appendChild(inputButton);
+    inputButton.textContent = "Submit";
 
- var inputButton = document.createElement("button");
- inputButton.type = "button";
- body.appendChild(inputButton);
- inputButton.textContent = "Submit"
-
- inputButton.addEventListener("click", highScore );
- 
+    inputButton.addEventListener("click", highScore);
 };
 
 var highScore = function () {
     var oldTitle = document.querySelector("h2");
     oldTitle.remove();
     var oldButton = document.querySelector("button");
-    oldButton.remove() 
+    oldButton.remove();
     var oldInputBox = document.querySelector("input");
     oldInputBox.remove();
-    var highScorePage = document.createElement("h2")
+    var highScorePage = document.createElement("h2");
     body.appendChild(highScorePage);
     highScorePage.textContent = "Highscores";
     var highScoreS = document.createElement("ol");
     body.appendChild(highScoreS);
-    highScoreS.textContent = "fdhsjfgbsdf"
-}
+    highScoreScores.forEach(function (element, index) {
+     var finalScores = document.createElement("li"); 
+     finalScores.textContent = element.initals +" - "+ element.time;
+     highScoreS.appendChild(finalScores);
+     
+    });
+    
+       
+
+    // itterate highscores array and make li inside of ol 
+};
+
+// function scoreInput() {
+//     var listOfScores = [];
+//     localStorage.setItem("listOfScores", JSON.stringify(listOfScores));
+// }
+
+// var user = {
+//     initials: initials.value.trim(),
+//     score: currentTime.value.trim(),
+// }
 
 var correctAnswer = function () {
     if (currentQuestion === 4) {
@@ -199,20 +239,17 @@ var correctAnswer = function () {
         currentQuestion++;
         nextQuestion(questionsArr[currentQuestion]);
     }
-   
 };
 
 var wrongAnswer = function () {
-     if (currentQuestion === 4) {
-         finishQuiz();
-     } else {
-         console.log("Wrong");
-         currentQuestion++;
-         nextQuestion(questionsArr[currentQuestion]);
-     }
-
+    if (currentQuestion === 4) {
+        finishQuiz();
+    } else {
+        console.log("Wrong");
+        currentQuestion++;
+        nextQuestion(questionsArr[currentQuestion]);
+    }
 };
-
 
 // start quiz button
 let btn = document.createElement("button");
@@ -222,11 +259,6 @@ btn.name = "formBtn";
 document.body.appendChild(btn);
 
 btn.addEventListener("click", startQuiz);
-
-
-
-
-
 
 //timer
 // var secondsLeft = 10;
@@ -251,12 +283,6 @@ btn.addEventListener("click", startQuiz);
 //     imgEl.setAttribute("src", "images/image_1.jpg");
 //     mainEl.appendChild(imgEl);
 // }
-
-
-
-
-
-
 
 // GIVEN I am taking a code quiz
 // WHEN I click the start button
