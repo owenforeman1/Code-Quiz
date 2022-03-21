@@ -6,6 +6,10 @@ var infoEl = document.createElement("div");
 var questionsEl = document.createElement("h2");
 var answersEl = document.createElement("ul")
 var currentQuestion = 0;
+var currentTime = 75;
+var timerEl = document.createElement("p");
+var timeInterval;
+var HighscoreScore = [];
 
 var buttonOne = document.createElement("button");
 var buttonTwo = document.createElement("button");
@@ -19,12 +23,15 @@ h1El.textContent = "US-Citizenship-Quiz!";
 questionsEl.textContent = "1. What is one right or freedom from the First Amendment?";
 introEl.textContent = "Try to answer the following questions within the time limit. Keep in mind wrong answers will deduct scoretime by ten seconds.";
 
+
 body.appendChild(h1El);
 body.appendChild(introEl);
 body.appendChild(infoEl);
 h1El.setAttribute("style", "color:blue; text-align:center;");
 
 var startQuiz = function () {
+    var titleRemove = document.querySelector("h1");
+    titleRemove.remove();
     introEl.remove();
     btn.remove();
     body.appendChild(questionsEl);
@@ -34,7 +41,35 @@ var startQuiz = function () {
     answersEl.appendChild(buttonThree);
     answersEl.appendChild(buttonFour);   
     nextQuestion(questionsArr[currentQuestion]);
+    body.appendChild(timerEl);
+    countdown();
 };
+
+function countdown() {
+    var currentTime = 75;
+    timerEl.textContent = currentTime + " seconds remaining";
+    // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
+     timeInterval = setInterval(function () {
+        // As long as the `currentTime` is greater than 1
+        if (currentTime > 1) {
+            // Set the `textContent` of `timerEl` to show the remaining seconds
+            timerEl.textContent = currentTime + " seconds remaining";
+            // Decrement `currentTime` by 1
+            currentTime--;
+        } else if (currentTime === 1) {
+            // When `currentTime` is equal to 1, rename to 'second' instead of 'seconds'
+            timerEl.textContent = currentTime + " second remaining";
+            currentTime--;
+        } else {
+            // Once `currentTime` gets to 0, set `timerEl` to an empty string
+            timerEl.textContent = "";
+            // Use `clearInterval()` to stop the timer
+            clearInterval(timeInterval);
+            // Call the `displayMessage()` function
+            displayMessage();
+        }
+    }, 1000);
+}
 
 let questionOne = {
     title: "1. What is one right or freedom from the First Amendment?",
@@ -44,25 +79,25 @@ let questionOne = {
 
 let questionTwo = {
     title: "2. Name one branch or part of the government?",
-    questions: ["Legislative", "New York", "Abe Lincoln", "Banana"],
+    questions: ["Legislative", "New York", "Abe Lincoln", "Military"],
     correctAnswer: 0,
 };
 
 let questionThree = {
-    title: "3. What is one right or freedom from the First Amendment?",
-    questions: ["Free pizza", "Speech", "free Coca Cola", "Free dogs"],
+    title: "3. If the President can no longer serve, who becomes President?",
+    questions: ["The People", "The Vice-President", "The Biggest Company", "The First Lady"],
     correctAnswer: 1,
 };
 
 let questionFour = {
-    title: "4. Under our Constitution, some powers belong to the federal government. What is one power of the federalgovernment?",
-    questions: ["To declare war", "Speech", "free Coca Cola", "Free dogs"],
+    title: "4. Under our Constitution, some powers belong to the federal government. What is one power of the federal government?",
+    questions: ["To declare war", "Time Travel", "Ban Elections", "Ban Religions"],
     correctAnswer: 0,
 };
 
 let questionFive = {
     title: "5. What is one reason colonists came to America?",
-    questions: ["Free pizza", "Speech", "free Coca Cola", "Freedom"],
+    questions: ["Free pizza", "Wanted Marshal law established", "Wanted different dog breeds", "Freedom"],
     correctAnswer: 3,
 };
 
@@ -78,7 +113,7 @@ let questionsArr = [
 var nextQuestion = function (question) {
 // new title
 questionsEl.textContent = question.title;
-// remove excitstinbg button
+// remove excitstinbg
 var oldButtonsArray = document.querySelectorAll("button");
 oldButtonsArray.forEach(function (element, index) {
     element.remove();
@@ -100,7 +135,7 @@ var buttonsArray = document.querySelectorAll("button");
 buttonsArray.forEach(function (element, index) {
     element.textContent = question.questions[index];
     element.addEventListener("click", function () {
-        console.log("BUtton CLicKED");
+        console.log("Button CLicKed");
         if (question.correctAnswer == index) {
             correctAnswer();
         } else {
@@ -114,9 +149,47 @@ buttonsArray.forEach(function (element, index) {
 
 };
 
-var finishQuiz = function () {
-    console.log("done");
+var finishQuiz = function () { 
+    var oldTitle = document.querySelector("h2");
+    oldTitle.remove();
+    var oldButtonsArray = document.querySelectorAll("button");
+      oldButtonsArray.forEach(function (element, index) {
+          element.remove();
+      });
+      clearInterval(timeInterval);
+    //   needs done and initail screen with score
+ var endScreen = document.createElement("h2");
+ body.appendChild(endScreen);
+ endScreen.textContent = "All Done!";
+
+ var input = document.createElement("input");
+ input.type = "text";
+ body.appendChild(input);
+
+
+ var inputButton = document.createElement("button");
+ inputButton.type = "button";
+ body.appendChild(inputButton);
+ inputButton.textContent = "Submit"
+
+ inputButton.addEventListener("click", highScore );
+ 
 };
+
+var highScore = function () {
+    var oldTitle = document.querySelector("h2");
+    oldTitle.remove();
+    var oldButton = document.querySelector("button");
+    oldButton.remove() 
+    var oldInputBox = document.querySelector("input");
+    oldInputBox.remove();
+    var highScorePage = document.createElement("h2")
+    body.appendChild(highScorePage);
+    highScorePage.textContent = "Highscores";
+    var highScoreS = document.createElement("ol");
+    body.appendChild(highScoreS);
+    highScoreS.textContent = "fdhsjfgbsdf"
+}
 
 var correctAnswer = function () {
     if (currentQuestion === 4) {
@@ -149,6 +222,8 @@ btn.name = "formBtn";
 document.body.appendChild(btn);
 
 btn.addEventListener("click", startQuiz);
+
+
 
 
 
