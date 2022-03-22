@@ -9,11 +9,10 @@ var currentQuestion = 0;
 var currentTime = 75;
 var timerEl = document.createElement("p");
 var timeInterval;
-var highScoreScores = [
-    { initals: "of", time: 15 },
-    { initals: "wf", time: 13 },
-    { initals: "dp", time: 9 },
-];
+var highScoreScores = JSON.parse(localStorage.getItem("finalFinalScore"));
+if (highScoreScores === null) {
+   highScoreScores = [];
+}
 var scoreInput = document.querySelector("score");
 
 var buttonOne = document.createElement("button");
@@ -29,10 +28,15 @@ questionsEl.textContent =
 introEl.textContent =
     "Try to answer the following questions within the time limit. Keep in mind wrong answers will deduct scoretime by ten seconds.";
 
+introEl.setAttribute("style", "text-align:center");
 body.appendChild(h1El);
 body.appendChild(introEl);
 body.appendChild(infoEl);
 h1El.setAttribute("style", "color:blue; text-align:center;");
+timerEl.setAttribute("style","height:50px");
+questionsEl.setAttribute("style", "text-align:center" )
+answersEl.setAttribute("style","text-align:center")
+
 
 var startQuiz = function () {
     var titleRemove = document.querySelector("h1");
@@ -48,10 +52,10 @@ var startQuiz = function () {
     nextQuestion(questionsArr[currentQuestion]);
     body.appendChild(timerEl);
     countdown();
+    document.getElementById("timerEl").style.animationFillMode
 };
 
 function countdown() {
-    var currentTime = 75;
     timerEl.textContent = currentTime + " seconds remaining";
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     timeInterval = setInterval(function () {
@@ -71,10 +75,12 @@ function countdown() {
             // Use `clearInterval()` to stop the timer
             clearInterval(timeInterval);
             // Call the `displayMessage()` function
-            displayMessage();
+           finishQuiz();
         }
     }, 1000);
 }
+
+
 
 let questionOne = {
     title: "1. What is one right or freedom from the First Amendment?",
@@ -163,13 +169,13 @@ var nextQuestion = function (question) {
         });
     });
 
-    // current time linked to highscores
+   
     // make page pretty
     // go back to start button
     // clear highscore history button
-    // wrong answers to subtract time
-    // figure out highscore storage
-    // local storage to store scores in browser
+    // line 55 fix?
+  
+
 };
 
 var finishQuiz = function () {
@@ -202,6 +208,12 @@ var highScore = function () {
     oldTitle.remove();
     var oldButton = document.querySelector("button");
     oldButton.remove();
+    var finalInitials = document.querySelector("input").value;
+    let finalScore = {
+        initals: finalInitials,
+        time: currentTime,
+    }
+    highScoreScores.push(finalScore);
     var oldInputBox = document.querySelector("input");
     oldInputBox.remove();
     var highScorePage = document.createElement("h2");
@@ -209,13 +221,22 @@ var highScore = function () {
     highScorePage.textContent = "Highscores";
     var highScoreS = document.createElement("ol");
     body.appendChild(highScoreS);
-    highScoreScores.forEach(function (element, index) {
+    var sortedHighScores = highScoreScores.sort((a, b) => b.time - a.time);
+    sortedHighScores.forEach(function (element, index) {
      var finalScores = document.createElement("li"); 
      finalScores.textContent = element.initals +" - "+ element.time;
      highScoreS.appendChild(finalScores);
-     
+
+      var inputButton = document.createElement("button");
+      inputButton.type = "button";
+      body.appendChild(inputButton);
+      inputButton.textContent = "Submit";
+      inputButton.onclick="history-back"();
+
+      inputButton.addEventListener("click", highScoreScores);
     });
-    
+    localStorage.setItem("finalFinalScore", JSON.stringify(sortedHighScores));
+
        
 
     // itterate highscores array and make li inside of ol 
@@ -249,6 +270,7 @@ var wrongAnswer = function () {
         currentQuestion++;
         nextQuestion(questionsArr[currentQuestion]);
     }
+    console.log(currentTime -= 10);
 };
 
 // start quiz button
