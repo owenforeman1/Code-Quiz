@@ -36,8 +36,6 @@ timerEl.setAttribute("style", "height:50px");
 questionsEl.setAttribute("style", "text-align:center");
 answersEl.setAttribute("style", "text-align:center");
 
-
-
 var startQuiz = function () {
     var titleRemove = document.querySelector("h1");
     titleRemove.remove();
@@ -149,10 +147,10 @@ var nextQuestion = function (question) {
     answersEl.appendChild(buttonTwo);
     answersEl.appendChild(buttonThree);
     answersEl.appendChild(buttonFour);
-     var questionButtonsArray = document.querySelectorAll("button");
-     questionButtonsArray.forEach(function (element, index) {
-         element.setAttribute("style", "background-color: skyblue");
-     });
+    var questionButtonsArray = document.querySelectorAll("button");
+    questionButtonsArray.forEach(function (element, index) {
+        element.setAttribute("style", "background-color: skyblue");
+    });
     // append new button
 
     // change buttons
