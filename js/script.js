@@ -11,7 +11,7 @@ var timerEl = document.createElement("p");
 var timeInterval;
 var highScoreScores = JSON.parse(localStorage.getItem("finalFinalScore"));
 if (highScoreScores === null) {
-   highScoreScores = [];
+    highScoreScores = [];
 }
 var scoreInput = document.querySelector("score");
 
@@ -27,15 +27,15 @@ questionsEl.textContent =
     "1. What is one right or freedom from the First Amendment?";
 introEl.textContent =
     "Try to answer the following questions within the time limit. Keep in mind wrong answers will deduct scoretime by ten seconds.";
-
 introEl.setAttribute("style", "text-align:center");
 body.appendChild(h1El);
 body.appendChild(introEl);
 body.appendChild(infoEl);
 h1El.setAttribute("style", "color:blue; text-align:center;");
-timerEl.setAttribute("style","height:50px");
-questionsEl.setAttribute("style", "text-align:center" )
-answersEl.setAttribute("style","text-align:center")
+timerEl.setAttribute("style", "height:50px");
+questionsEl.setAttribute("style", "text-align:center");
+answersEl.setAttribute("style", "text-align:center");
+
 
 
 var startQuiz = function () {
@@ -52,7 +52,6 @@ var startQuiz = function () {
     nextQuestion(questionsArr[currentQuestion]);
     body.appendChild(timerEl);
     countdown();
-    document.getElementById("timerEl").style.animationFillMode
 };
 
 function countdown() {
@@ -75,16 +74,14 @@ function countdown() {
             // Use `clearInterval()` to stop the timer
             clearInterval(timeInterval);
             // Call the `displayMessage()` function
-           finishQuiz();
+            finishQuiz();
         }
     }, 1000);
 }
 
-
-
 let questionOne = {
     title: "1. What is one right or freedom from the First Amendment?",
-    questions: ["Free pizza", "free soda", "Speech", "Free dogs"],
+    questions: ["Free pizza", "Free soda", "Speech", "Free dogs"],
     correctAnswer: 2,
 };
 
@@ -152,6 +149,10 @@ var nextQuestion = function (question) {
     answersEl.appendChild(buttonTwo);
     answersEl.appendChild(buttonThree);
     answersEl.appendChild(buttonFour);
+     var questionButtonsArray = document.querySelectorAll("button");
+     questionButtonsArray.forEach(function (element, index) {
+         element.setAttribute("style", "background-color: skyblue");
+     });
     // append new button
 
     // change buttons
@@ -168,14 +169,6 @@ var nextQuestion = function (question) {
             }
         });
     });
-
-   
-    // make page pretty
-    // go back to start button
-    // clear highscore history button
-    // line 55 fix?
-  
-
 };
 
 var finishQuiz = function () {
@@ -197,9 +190,9 @@ var finishQuiz = function () {
 
     var inputButton = document.createElement("button");
     inputButton.type = "button";
+    inputButton.setAttribute("style", "background-color: skyblue;");
     body.appendChild(inputButton);
     inputButton.textContent = "Submit";
-
     inputButton.addEventListener("click", highScore);
 };
 
@@ -212,7 +205,7 @@ var highScore = function () {
     let finalScore = {
         initals: finalInitials,
         time: currentTime,
-    }
+    };
     highScoreScores.push(finalScore);
     var oldInputBox = document.querySelector("input");
     oldInputBox.remove();
@@ -223,34 +216,12 @@ var highScore = function () {
     body.appendChild(highScoreS);
     var sortedHighScores = highScoreScores.sort((a, b) => b.time - a.time);
     sortedHighScores.forEach(function (element, index) {
-     var finalScores = document.createElement("li"); 
-     finalScores.textContent = element.initals +" - "+ element.time;
-     highScoreS.appendChild(finalScores);
-
-      var inputButton = document.createElement("button");
-      inputButton.type = "button";
-      body.appendChild(inputButton);
-      inputButton.textContent = "Submit";
-      inputButton.onclick="history-back"();
-
-      inputButton.addEventListener("click", highScoreScores);
+        var finalScores = document.createElement("li");
+        finalScores.textContent = element.initals + " - " + element.time;
+        highScoreS.appendChild(finalScores);
     });
     localStorage.setItem("finalFinalScore", JSON.stringify(sortedHighScores));
-
-       
-
-    // itterate highscores array and make li inside of ol 
 };
-
-// function scoreInput() {
-//     var listOfScores = [];
-//     localStorage.setItem("listOfScores", JSON.stringify(listOfScores));
-// }
-
-// var user = {
-//     initials: initials.value.trim(),
-//     score: currentTime.value.trim(),
-// }
 
 var correctAnswer = function () {
     if (currentQuestion === 4) {
@@ -270,7 +241,7 @@ var wrongAnswer = function () {
         currentQuestion++;
         nextQuestion(questionsArr[currentQuestion]);
     }
-    console.log(currentTime -= 10);
+    console.log((currentTime -= 10));
 };
 
 // start quiz button
@@ -278,42 +249,6 @@ let btn = document.createElement("button");
 btn.innerHTML = "Start Quiz";
 btn.type = "Start Quiz";
 btn.name = "formBtn";
+btn.setAttribute("style", "background-color: skyblue");
 document.body.appendChild(btn);
-
 btn.addEventListener("click", startQuiz);
-
-//timer
-// var secondsLeft = 10;
-
-// function setTime() {
-//     // Sets interval in variable
-//     var timerInterval = setInterval(function () {
-//         secondsLeft--;
-//         timeEl.textContent = secondsLeft + " seconds left till colorsplosion.";
-
-//         if (secondsLeft === 0) {
-//             // Stops execution of action at set interval
-//             clearInterval(timerInterval);
-//             // Calls function to create and append image
-//             sendMessage();
-//         }
-//     }, 1000);
-// }
-// function sendMessage() {
-//     timeEl.textContent = " ";
-//     var imgEl = document.createElement("img");
-//     imgEl.setAttribute("src", "images/image_1.jpg");
-//     mainEl.appendChild(imgEl);
-// }
-
-// GIVEN I am taking a code quiz
-// WHEN I click the start button
-// THEN a timer starts and I am presented with a question
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and my score
